@@ -8,11 +8,17 @@ function App() {
     "파이썬독학",
   ]);
   let [good, setGood] = useState(0);
-  const title = "여자 추천 코트";
 
   const set = () => {
     let copy = [...item];
     copy[0] = "여자 추천 코트";
+    setItem(copy);
+  };
+
+  const sort = () => {
+    let copy = [...item];
+    copy.sort();
+    console.log(copy);
     setItem(copy);
   };
 
@@ -21,6 +27,7 @@ function App() {
       <div className="nav-bar">
         <h4>블로그 제목</h4>
       </div>
+      <button onClick={sort}>가나다순정렬</button>
       <button type="button" onClick={set}>
         제목 변경
       </button>
