@@ -7,7 +7,7 @@ function App() {
     "강남 우동 맛집",
     "파이썬독학",
   ]);
-  let [good, setGood] = useState(0);
+  let [good, setGood] = useState([0, 0, 0]);
 
   const set = () => {
     let copy = [...item];
@@ -37,7 +37,7 @@ function App() {
       <button type="button" onClick={set}>
         제목 변경
       </button>
-      <div className="list">
+      {/* <div className="list">
         <h4>
           {item[0]}
           <span
@@ -54,7 +54,29 @@ function App() {
       <div className="list">
         <h4 onClick={controlTitle}>{item[1]}</h4>
         <p>2월 17일 발행</p>
-      </div>
+      </div> */}
+
+      {item.map(function (item, i) {
+        return (
+          <div className="list" key={i}>
+            <h4 onClick={controlTitle}>
+              {item}
+              <span
+                onClick={() => {
+                  let copyGood = [...good];
+                  copyGood[i] += 1;
+                  setGood(copyGood);
+                }}
+              >
+                ❤️
+              </span>
+              {good[i]}
+            </h4>
+            <p>2월 17일 발행</p>
+          </div>
+        );
+      })}
+
       {modal == true ? <Modal /> : null}
     </div>
   );
