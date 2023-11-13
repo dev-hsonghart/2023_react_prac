@@ -18,8 +18,14 @@ function App() {
   const sort = () => {
     let copy = [...item];
     copy.sort();
-    console.log(copy);
+
     setItem(copy);
+  };
+
+  let [modal, setModal] = useState(false);
+  const controlTitle = () => {
+    let bool = !modal;
+    setModal(bool);
   };
 
   return (
@@ -46,13 +52,20 @@ function App() {
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
-        <h4>{item[1]}</h4>
+        <h4 onClick={controlTitle}>{item[1]}</h4>
         <p>2월 17일 발행</p>
       </div>
-      <div className="list">
-        <h4>{item[2]}</h4>
-        <p>2월 17일 발행</p>
-      </div>
+      {modal == true ? <Modal /> : null}
+    </div>
+  );
+}
+
+function Modal() {
+  return (
+    <div className="modal">
+      <h4>제목</h4>
+      <p>날짜</p>
+      <p>상세내용</p>
     </div>
   );
 }
