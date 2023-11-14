@@ -6,6 +6,7 @@ function App() {
     "남자 코트 추천",
     "강남 우동 맛집",
     "파이썬독학",
+    "블렌더 배우기",
   ]);
   let goods = item.map(function () {
     return 0;
@@ -63,17 +64,18 @@ function App() {
         );
       })}
 
-      {modal == true ? <Modal /> : null}
+      {modal == true ? <Modal title={item} click={set} /> : null}
     </div>
   );
 }
 
-function Modal() {
+function Modal(props) {
   return (
     <div className="modal">
-      <h4>제목</h4>
+      <h4>{props.title[0]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
+      <button onClick={props.click}>글수정</button>
     </div>
   );
 }
