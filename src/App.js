@@ -12,25 +12,50 @@ function App() {
     return 0;
   });
 
+  let copy = [...item];
+
   let [good, setGood] = useState(goods);
 
   const set = () => {
-    let copy = [...item];
     copy[0] = "여자 추천 코트";
     setItem(copy);
   };
 
   const sort = () => {
-    let copy = [...item];
     copy.sort();
 
     setItem(copy);
   };
 
   let [modal, setModal] = useState(false);
-  const controlTitle = () => {
-    let bool = !modal;
-    setModal(bool);
+  let [index, setIndex] = useState(0);
+  // const controlTitle = (i) => {
+  //   let bool = !modal;
+  //   setModal(bool);
+
+  //   setIndex(i);
+  // };
+
+  const [input, setInput] = useState("");
+  const handlerInput = (e) => {
+    // 입력값을 변수에 업데이트 하기
+    let currentInput = e.target.value;
+    setInput(currentInput);
+  };
+
+  const updateItem = (e) => {
+    copy.push(input);
+    setItem(copy);
+    setInput("");
+  };
+
+  const deleteItem = (e) => {
+    // 클릭한 아이템을 지우기
+    // 클릭이 일어난 list에서 h4의 text값을 copy array에서 지우기
+
+    const currentListIndex = e.target.parentNode.id;
+    copy.splice(currentListIndex, 1);
+    setItem(copy);
   };
 
   return (
@@ -45,8 +70,14 @@ function App() {
 
       {item.map(function (item, i) {
         return (
-          <div className="list" key={i}>
-            <h4 onClick={controlTitle}>
+          <div className="list" key={i} id={i}>
+            <h4
+              onClick={() => {
+                let bool = !modal;
+                setModal(bool);
+                setIndex(i);
+              }}
+            >
               {item}
               <span
                 onClick={() => {
@@ -60,11 +91,15 @@ function App() {
               {good[i]}
             </h4>
             <p>2월 17일 발행</p>
+            <button onClick={deleteItem}>삭제</button>
           </div>
         );
       })}
 
-      {modal == true ? <Modal title={item} click={set} /> : null}
+      <input type="text" onChange={handlerInput} value={input} />
+      <button onClick={updateItem}>글 추가</button>
+
+      {modal == true ? <Modal index={index} title={item} click={set} /> : null}
     </div>
   );
 }
@@ -72,7 +107,7 @@ function App() {
 function Modal(props) {
   return (
     <div className="modal">
-      <h4>{props.title[0]}</h4>
+      <h4>{props.title[props.index]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
       <button onClick={props.click}>글수정</button>
