@@ -91,7 +91,14 @@ function App() {
               {good[i]}
             </h4>
             <p>2월 17일 발행</p>
-            <button onClick={deleteItem}>삭제</button>
+            <button
+              onClick={() => {
+                copy.splice(i, 1);
+                setItem(copy);
+              }}
+            >
+              삭제
+            </button>
           </div>
         );
       })}
